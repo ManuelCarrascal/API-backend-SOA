@@ -1,0 +1,8 @@
+###> Module ###
+/node_modules/
+###< editores ###
+
+###> editores ###
+.vscode
+.env
+###< editores ###
