@@ -25,11 +25,11 @@ El servidor se ejecutará en el puerto 4200.
 El archivo `.env` se utiliza para configurar las variables de entorno de la aplicación. A continuación se muestran las variables de entorno que se utilizan en este proyecto:
 
 ```
-PORT=4200
+PORT=<puerto>
 
-DB_URL_PG=postgresql://postgres:123@localhost:5432/prueba 
+DB_URL_PG=postgresql://<usuario>:<contraseña>@localhost:5432/<nombre_de_la_base_de_datos> 
 
-SECRET_KEY=48dGvc7k8b
+SECRET_KEY=<tu_secret_key>
 
 ```
 ---
