@@ -16,6 +16,7 @@ export const verifyToken = (req, res, next) => {
     });
   }
   jwt.verify(token[1], exports.secret, (err, decoded) => {
+    
     if (err) {
       return res.status(401).send({ message: 'No autorizado!' });
     }

@@ -214,3 +214,13 @@ export const updateArtistValidator = checkSchema(
   },
   ['body']
 );
+
+export const deleteArtistValidator = checkSchema(
+  {
+    id: {
+      errorMessage: 'No se ingreso un id valido',
+      notEmpty: true,
+    },
+  },
+  ['params']
+);

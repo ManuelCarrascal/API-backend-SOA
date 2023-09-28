@@ -1,4 +1,5 @@
 import {
+  deleteArtistModel,
   getArtistUnicoModel,
   getArtistsModel,
   postArtistaModel,
@@ -6,58 +7,105 @@ import {
 } from '../models/artista.model.js';
 
 export const getAll = async (req, res) => {
-  let data = await getArtistsModel();
-  res.json({ success: true, data: data, msg: 'get All' });
+  try {
+    const page = req.query.page || 1;
+    const pageSize = req.query.pageSize || 10;
+    let data = await getArtistsModel(page, pageSize);
+    res.json({ success: true, data: data, msg: 'get All' });
+  } catch (error) {
+    res.status(500).json({
+      data: [],
+      msg: 'Servicio no disponible, Por favor intente mas tarde',
+      success: false,
+    });
+  }
 };
 
 export async function getArtista(req, res) {
-  const id = req.params.id;
-  let data = await getArtistUnicoModel(id);
-  res.json({ success: true, data: data, msg: 'Artista Obtenido' });
+  try {
+    const id = req.params.id;
+    let data = await getArtistUnicoModel(id);
+    res.json({ success: true, data: data, msg: 'Artista Obtenido' });
+  } catch {
+    res.status(500).json({
+      data: [],
+      msg: 'Servicio no disponible, Por favor intente mas tarde',
+      success: false,
+    });
+  }
 }
 
 export async function createArtist(req, res) {
-  let {
-    nombre,
-    nombreArtistico,
-    correo,
-    contrasena,
-    telefono,
-    generoMusical,
-    biografia,
-  } = req.body;
-  let data = await postArtistaModel(
-    nombre,
-    nombreArtistico,
-    correo,
-    contrasena,
-    telefono,
-    generoMusical,
-    biografia
-  );
-  res.json({ success: true, data: [], msg: data });
+  try {
+    let {
+      nombre,
+      nombreArtistico,
+      correo,
+      contrasena,
+      telefono,
+      generoMusical,
+      biografia,
+    } = req.body;
+    let data = await postArtistaModel(
+      nombre,
+      nombreArtistico,
+      correo,
+      contrasena,
+      telefono,
+      generoMusical,
+      biografia
+    );
+    res.json({ success: true, data: [], msg: data });
+  } catch (error) {
+    res.status(500).json({
+      data: [],
+      msg: 'Servicio no disponible, Por favor intente mas tarde',
+      success: false,
+    });
+  }
 }
-
 export async function updateArtist(req, res) {
-  let {
-    nombre,
-    nombreArtistico,
-    correo,
-    contrasena,
-    telefono,
-    generoMusical,
-    biografia,
-  } = req.body;
-  let id = req.params.id;
-  let data = await updateArtistModel(
-    nombre,
-    nombreArtistico,
-    correo,
-    contrasena,
-    telefono,
-    generoMusical,
-    biografia,
-    id
-  );
-  res.json({ success: true, data: [], msg: data });
+  try {
+    const {
+      nombre,
+      nombreArtistico,
+      correo,
+      contrasena,
+      telefono,
+      generoMusical,
+      biografia,
+    } = req.body;
+    const id = req.params.id;
+    const artistData = {
+      nombre,
+      nombreArtistico,
+      correo,
+      contrasena,
+      telefono,
+      generoMusical,
+      biografia,
+      id,
+    };
+    const data = await updateArtistModel(artistData);
+    res.json({ success: true, data: [], msg: data });
+  } catch (error) {
+    res.status(500).json({
+      data: [],
+      msg: 'Servicio no disponible, Por favor intente mas tarde',
+      success: false,
+    });
+  }
+}
+export async function deleteArtist(req, res) {
+  try {
+    const { id } = req.params;
+    const data = await deleteArtistModel(id);
+    res.json({ success: true, data: [], msg: data });
+  } catch (e) {
+    res.status(500).json({
+      data: [],
+      msg: 'Servicio no disponible, Por favor intente mas tarde',
+      success: false,
+    });
+  }
 }
