@@ -37,13 +37,18 @@ SECRET_KEY=48dGvc7k8b
 
 A continuación se muestran las rutas de Postman que se pueden utilizar para interactuar con la API:
 
-- Autenticación: `localhost:4200/auth`
+- Autenticación: `localhost:4200/auth?usuario=<usuario>&contrasena=<contrasena>`
+<!-- Nota: Esta ruta necesita enviar por parametro usuario y contraseña reemplaza <usuario>, <contrasena> por los datos correspondientes -->
 - Creación de artistas (método POST): `http://localhost:4200/api/artistas`
-- Consulta de un artista (método GET): `http://localhost:4200/api/artistas/1`
-- Consulta de todos los artistas (método GET): `http://localhost:4200/api/artistas`
-- Actualización de un artista (método PUT): `http://localhost:4200/api/artistas/1`
-- Eliminación de un artista (método DELETE): `http://localhost:4200/api/artistas/500`
-
+<!-- Nota: Recuerda enviar todos los campos en el body que son requeridos para poder ingresar un nuevo usuario.-->
+- Consulta de un artista (método GET): `http://localhost:4200/api/artistas/<id>`
+<!-- Nota: Esta ruta necesita enviar por parametro el id del artista a consultar, reemplaza <id> por el id correspondiente -->
+- Consulta de todos los artistas (método GET): `http://localhost:4200/api/artistas?page=<page>&pageSize=<pageSize>`
+<!-- Nota: Esta ruta necesita enviar por parametro page y pageSize reemplaza <page> y <pageSize> por los datos correspondientes para lograr una paginacion.-->
+- Actualización de un artista (método PUT): `http://localhost:4200/api/artistas/<id>`
+<!-- Nota: Esta ruta necesita enviar por parametro el id del artista a consultar, para luego poder actualizar, reemplaza <id> por el dato correspondiente -->
+- Eliminación de un artista (método DELETE): `http://localhost:4200/api/artistas/<id>`
+<!-- Nota: Esta ruta necesita enviar por parametro el id del artista a consultar, para luego poder eliminar, reemplaza <id> por el dato correspondiente -->
 ---
 ## Base de datos
 
