@@ -43,3 +43,8 @@ A continuación se muestran las rutas de Postman que se pueden utilizar para int
 - Consulta de todos los artistas (método GET): `http://localhost:4200/api/artistas`
 - Actualización de un artista (método PUT): `http://localhost:4200/api/artistas/1`
 - Eliminación de un artista (método DELETE): `http://localhost:4200/api/artistas/500`
+
+---
+## Base de datos
+
+La base de datos postgreSQL utilizada por la aplicacion se llama `prueba`. Puedes montar una copia de esta db utilizando el archivo `db.sql` que se encuentra en la raiz del proyecto.
