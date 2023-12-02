@@ -37,22 +37,14 @@ export async function getArtista(req, res) {
 
 export async function createArtist(req, res) {
   try {
-    let {
-      nombre,
-      nombreArtistico,
-      correo,
-      contrasena,
-      telefono,
-      generoMusical,
-      biografia,
-    } = req.body;
+    let { nombre, nombreArtistico, correo, contrasena, telefono, biografia } =
+      req.body;
     let data = await postArtistaModel(
       nombre,
       nombreArtistico,
       correo,
       contrasena,
       telefono,
-      generoMusical,
       biografia
     );
     res.json({ success: true, data: [], msg: data });
@@ -66,15 +58,8 @@ export async function createArtist(req, res) {
 }
 export async function updateArtist(req, res) {
   try {
-    const {
-      nombre,
-      nombreArtistico,
-      correo,
-      contrasena,
-      telefono,
-      generoMusical,
-      biografia,
-    } = req.body;
+    const { nombre, nombreArtistico, correo, contrasena, telefono, biografia } =
+      req.body;
     const id = req.params.id;
     const artistData = {
       nombre,
@@ -82,7 +67,6 @@ export async function updateArtist(req, res) {
       correo,
       contrasena,
       telefono,
-      generoMusical,
       biografia,
       id,
     };

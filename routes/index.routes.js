@@ -7,7 +7,8 @@ const router = Router();
 const generalRouters = [
   { path: '/auth', route: Auth },
   { path: '/api/artistas', route: Artista },
-];
+  { path: '/api/register', route: Artista },
+]; 
 
 generalRouters.forEach((route) => {
   router.use(route.path, route.route);

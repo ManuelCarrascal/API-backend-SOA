@@ -1,6 +1,7 @@
 /** Importación type: Module / ES */
 import express from 'express';
 import bodyParser from 'body-parser';
+import cors from 'cors';
 import { exports } from './default.js';
 import router from '../routes/index.routes.js';
 import middleware from '../middlewares/index.middleware.js';
@@ -17,6 +18,7 @@ export default class Server {
   }
 
   middleware() {
+    this.app.use(cors());
     this.app.use(bodyParser.json());
     this.app.use(middleware);
   }

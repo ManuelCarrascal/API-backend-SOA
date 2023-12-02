@@ -3,8 +3,8 @@ import { generateToken } from '../services/token.service.js';
 
 export const login = async (req, res) => {
   try {
-    const { usuario, contrasena } = req.query;
-    let data = await getUser(usuario, contrasena);
+    const { correo, contrasena } = req.query;
+    let data = await getUser(correo, contrasena);
 
     if (!data) {
       throw Error('Error de credenciales');

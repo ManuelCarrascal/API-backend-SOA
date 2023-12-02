@@ -21,15 +21,14 @@ export const postArtistaModel = async (
   correo,
   contrasena,
   telefono,
-  generoMusical,
   biografia
 ) => {
   try {
     const pg = new pgService();
-    const query = `INSERT INTO ARTISTA 
-    (nombre_real,nombre_artistico,correo,contrasena,telefono,genero_musical,biografia)  
+    const query = `INSERT INTO artista 
+    (nombre,nombreartistico,correo,contrasena,telefono,biografia)  
     VALUES 
-    ($1, $2, $3, $4, $5, $6, $7)
+    ($1, $2, $3, $4, $5, $6)
     `;
     await pg.connection.none(query, [
       nombre,
@@ -37,7 +36,6 @@ export const postArtistaModel = async (
       correo,
       contrasena,
       telefono,
-      generoMusical,
       biografia,
     ]);
     return 'Artista creado exitosamente';
@@ -56,7 +54,6 @@ export const updateArtistModel = async (artistData) => {
     correo,
     contrasena,
     telefono,
-    generoMusical,
     biografia,
     id,
   } = artistData;
@@ -68,7 +65,6 @@ export const updateArtistModel = async (artistData) => {
     correo = $3,
     contrasena = $4,
     telefono = $5,
-    genero_musical = $6,
     biografia = $7
     WHERE id = $8
     `;
