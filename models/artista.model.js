@@ -17,7 +17,7 @@ export const getArtistUnicoModel = async (id) => {
 
 export const postArtistaModel = async (
   nombre,
-  nombreArtistico,
+  nombreartistico,
   correo,
   contrasena,
   telefono,
@@ -25,6 +25,15 @@ export const postArtistaModel = async (
 ) => {
   try {
     const pg = new pgService();
+    const existingArtistQuery = `SELECT * FROM artista WHERE correo = $1`;
+    const existingArtist = await pg.connection.oneOrNone(existingArtistQuery, [
+      correo,
+    ]);
+
+    if (existingArtist) {
+      throw new Error('El correo ya está registrado');
+    }
+
     const query = `INSERT INTO artista 
     (nombre,nombreartistico,correo,contrasena,telefono,biografia)  
     VALUES 
@@ -32,7 +41,7 @@ export const postArtistaModel = async (
     `;
     await pg.connection.none(query, [
       nombre,
-      nombreArtistico,
+      nombreartistico,
       correo,
       contrasena,
       telefono,
@@ -40,8 +49,8 @@ export const postArtistaModel = async (
     ]);
     return 'Artista creado exitosamente';
   } catch (error) {
-    if (error.code === '23505') {
-      return 'El correo ya está registrado';
+    if (error.message === 'El correo ya está registrado') {
+      return error.message;
     }
     return 'Error al crear el artista';
   }
@@ -50,7 +59,7 @@ export const postArtistaModel = async (
 export const updateArtistModel = async (artistData) => {
   const {
     nombre,
-    nombreArtistico,
+    nombreartistico,
     correo,
     contrasena,
     telefono,
@@ -60,13 +69,13 @@ export const updateArtistModel = async (artistData) => {
   try {
     const pg = new pgService();
     const query = `UPDATE ARTISTA SET
-    nombre_real = $1,
-    nombre_artistico = $2,
+    nombre = $1,
+    nombreartistico = $2,
     correo = $3,
     contrasena = $4,
     telefono = $5,
-    biografia = $7
-    WHERE id = $8
+    biografia = $6
+    WHERE id = $7
     `;
     const result = await pg.connection.result(
       `SELECT COUNT(*) FROM ARTISTA WHERE id = $1`,
@@ -77,11 +86,10 @@ export const updateArtistModel = async (artistData) => {
     }
     await pg.connection.none(query, [
       nombre,
-      nombreArtistico,
+      nombreartistico,
       correo,
       contrasena,
       telefono,
-      generoMusical,
       biografia,
       id,
     ]);
@@ -111,4 +119,11 @@ export const deleteArtistModel = async (id) => {
   } catch (error) {
     throw new Error('Error al eliminar el artista');
   }
+};
+
+export const findArtistByEmail = async (correo) => {
+  const pg = new pgService();
+  const query = 'SELECT * FROM artista WHERE correo = $1';
+  const result = await pg.connection.oneOrNone(query, [correo]);
+  return result;
 };

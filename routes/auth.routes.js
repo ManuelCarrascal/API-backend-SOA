@@ -4,6 +4,6 @@ import { usuarioValidator } from '../validators/usuario.validator.js';
 import { validate } from '../middlewares/validator.middleware.js';
 const router = Router();
 
-router.get('/', validate(usuarioValidator), login);
+router.post('/', validate(usuarioValidator), login);
 
 export default router;

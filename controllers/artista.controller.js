@@ -11,7 +11,7 @@ export const getAll = async (req, res) => {
     const page = req.query.page || 1;
     const pageSize = req.query.pageSize || 10;
     let data = await getArtistsModel(page, pageSize);
-    res.json({ success: true, data: data, msg: 'get All' });
+    res.json(data);
   } catch (error) {
     res.status(500).json({
       data: [],
@@ -37,11 +37,11 @@ export async function getArtista(req, res) {
 
 export async function createArtist(req, res) {
   try {
-    let { nombre, nombreArtistico, correo, contrasena, telefono, biografia } =
+    let { nombre, nombreartistico, correo, contrasena, telefono, biografia } =
       req.body;
     let data = await postArtistaModel(
       nombre,
-      nombreArtistico,
+      nombreartistico,
       correo,
       contrasena,
       telefono,
@@ -58,12 +58,14 @@ export async function createArtist(req, res) {
 }
 export async function updateArtist(req, res) {
   try {
-    const { nombre, nombreArtistico, correo, contrasena, telefono, biografia } =
+    const { nombre, nombreartistico, correo, contrasena, telefono, biografia } =
       req.body;
+    console.log(req.body);
+    console.log(res.body);
     const id = req.params.id;
     const artistData = {
       nombre,
-      nombreArtistico,
+      nombreartistico,
       correo,
       contrasena,
       telefono,
@@ -71,7 +73,7 @@ export async function updateArtist(req, res) {
       id,
     };
     const data = await updateArtistModel(artistData);
-    res.json({ success: true, data: [], msg: data });
+    res.json(data);
   } catch (error) {
     res.status(500).json({
       data: [],
@@ -80,11 +82,12 @@ export async function updateArtist(req, res) {
     });
   }
 }
+
 export async function deleteArtist(req, res) {
   try {
     const { id } = req.params;
     const data = await deleteArtistModel(id);
-    res.json({ success: true, data: [], msg: data });
+    res.json(data);
   } catch (e) {
     res.status(500).json({
       data: [],

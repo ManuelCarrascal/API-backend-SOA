@@ -1,4 +1,5 @@
 import { checkSchema } from 'express-validator';
+import { findArtistByEmail } from '../models/artista.model.js';
 
 export const postArtistValidator = checkSchema(
   {
@@ -11,7 +12,7 @@ export const postArtistValidator = checkSchema(
         errorMessage: 'El nombre debe tener mínimo 3 caracteres',
       },
     },
-    nombreArtistico: {
+    nombreartistico: {
       errorMessage: 'Nombre Artístico invalido',
       notEmpty: true,
       trim: true,
@@ -23,6 +24,14 @@ export const postArtistValidator = checkSchema(
     correo: {
       errorMessage: 'Correo invalido',
       notEmpty: true,
+      custom: {
+        options: async (value) => {
+          const artist = await findArtistByEmail(value);
+          if (artist) {
+            return Promise.reject('El correo ya se encuentra registrado');
+          }
+        },
+      },
       trim: true,
       normalizeEmail: true,
       isEmail: {
@@ -33,9 +42,18 @@ export const postArtistValidator = checkSchema(
       errorMessage: 'Contraseña invalida',
       notEmpty: true,
       trim: true,
+      normalizeEmail: true,
       isLength: {
         options: { min: 8 },
         errorMessage: 'La contraseña debe tener mínimo 8 caracteres',
+      },
+      custom: {
+        options: async (value) => {
+          const artist = await findArtistByEmail(value);
+          if (artist) {
+            return Promise.reject('El correo ya se encuentra registrado');
+          }
+        },
       },
     },
     telefono: {
@@ -71,7 +89,7 @@ export const updateArtistValidator = checkSchema(
       errorMessage:
         'El nombre debe ser una cadena de texto de 1 a 50 caracteres',
     },
-    nameArtistic: {
+    nombreartistico: {
       optional: true,
       isString: true,
       trim: true,
@@ -81,14 +99,22 @@ export const updateArtistValidator = checkSchema(
       errorMessage:
         'El nombre artistico debe ser una cadena de texto de 1 a 50 caracteres',
     },
-    email: {
+    correo: {
       optional: true,
       isEmail: true,
+      custom: {
+        options: async (value) => {
+          const artist = await findArtistByEmail(value);
+          if (artist) {
+            return Promise.reject('El correo ya se encuentra registrado');
+          }
+        },
+      },
       trim: true,
       normalizeEmail: true,
       errorMessage: 'El correo debe ser valido',
     },
-    password: {
+    contrasena: {
       optional: true,
       isString: true,
       trim: true,
@@ -98,13 +124,13 @@ export const updateArtistValidator = checkSchema(
       errorMessage:
         'La contraseña debe ser una cadena de texto de 8 a 20 caracteres',
     },
-    phone: {
+    telefono: {
       optional: true,
       isString: true,
       trim: true,
       errorMessage: 'El telefono debe ser valido',
     },
-    biography: {
+    biografia: {
       optional: true,
       isString: true,
       trim: true,

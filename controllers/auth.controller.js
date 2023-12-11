@@ -3,7 +3,7 @@ import { generateToken } from '../services/token.service.js';
 
 export const login = async (req, res) => {
   try {
-    const { correo, contrasena } = req.query;
+    const { correo, contrasena } = req.body;
     let data = await getUser(correo, contrasena);
 
     if (!data) {

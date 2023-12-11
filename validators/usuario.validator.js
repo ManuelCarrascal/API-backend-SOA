@@ -1,20 +1,22 @@
-import { checkSchema } from  'express-validator';
+import { checkSchema } from 'express-validator';
 
-export const usuarioValidator = checkSchema({
-    usuario: {
-      errorMessage: 'Usuario invalido',
+export const usuarioValidator = checkSchema(
+  {
+    correo: {
+      errorMessage: 'Correo inválido',
       notEmpty: true,
-      isLength: {
-        options: { min: 3 },
-        errorMessage: 'El Usuario debe tener minimo 3 caracteres',
-      },
+      isEmail: true,
+      errorMessage:
+        'El correo debe ser una dirección de correo electrónico válida',
     },
     contrasena: {
-        errorMessage: 'contraseña invalido',
-        notEmpty: true,
-        isLength: {
-          options: { min: 8 },
-          errorMessage: 'La contraseña debe tener minimo 8 caracteres',
-        },
-    }
-} ,['query']);
+      errorMessage: 'Contraseña inválida',
+      notEmpty: true,
+      isLength: {
+        options: { min: 8 },
+        errorMessage: 'La contraseña debe tener mínimo 8 caracteres',
+      },
+    },
+  },
+  ['body']
+);
